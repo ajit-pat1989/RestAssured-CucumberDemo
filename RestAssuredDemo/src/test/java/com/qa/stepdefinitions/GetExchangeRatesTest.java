@@ -111,6 +111,33 @@ public class GetExchangeRatesTest extends TestBase {
 		Object key = (Object) responseObject.get(responseKey);
 		compareResponseValues(String.valueOf(value), String.valueOf(key), responseKey);
 	}
+	
+	
+	@And("^I set the query parameter as symbols \"([^\"]*)\"$")
+	public void i_set_the_query_parameter_as_symbols(String arg1) throws Throwable {
+
+	}
+
+	@Then("^I verify the response body as per given query parameter$")
+	public void i_verify_the_response_body_as_per_given_query_parameter() throws Throwable {
+
+	}
+
+	@And("^I set the query parameter as Base \"([^\"]*)\"$")
+	public void i_set_the_query_parameter_as_Base(String arg1) throws Throwable {
+
+	}
+
+	@And("^I set the query parameter as Base \"([^\"]*)\" and \"([^\"]*)\"$")
+	public void i_set_the_query_parameter_as_Base_and(String arg1, String arg2) throws Throwable {
+
+	}
+
+	@And("^I set the query parameter as Base \"([^\"]*)\" and Symbols \"([^\"]*)\"$")
+	public void i_set_the_query_parameter_as_Base_and_Symbols(String arg1, String arg2) throws Throwable {
+
+	}
+	
 
 	private void compareResponseValues(String expected, String actual, String responseKey) {
 		Reporter.addStepLog("Actual Value is  ::" + actual);
