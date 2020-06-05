@@ -37,12 +37,35 @@ public class GetExchangeRatesTest extends TestBase {
 	public void setAPIEndpointURL(String URL, String testCaseName) {
 		TestBase testBase = new TestBase();
 		String apiHostName = prop.getProperty("URL");
-		//String apiHostName = "https://api.ratesapi.io/api";
+		
 		apiEndPointUri = String.format("%s%s", apiHostName, URL);
 		testName = testCaseName;
 		Reporter.addStepLog(Status.PASS + " :: Cucumber Hostname URL is :: " + apiEndPointUri);
 		logger.info("Cucumber Hostname URL is :: " + apiEndPointUri);
 		logger.info("Cucumber Test case name is :: " + testName);
+	}
+	
+	
+	@Given("^I want to set URL as \"([^\"]*)\" for test case \"([^\"]*)\" having parameters \"([^\"]*)\" and \"([^\"]*)\"$")
+	public void setAPIEndpointURL(String URL, String testCaseName, String symbol, String base) throws Throwable {
+		TestBase testBase = new TestBase();
+		String apiHostName = prop.getProperty("URL");	
+		if (symbol != null && !symbol.isEmpty() && base == null && base.isEmpty()) {
+			URL = URL+"?symbols="+symbol;
+		} else if(base != null && !base.isEmpty() && symbol == null && symbol.isEmpty()){
+			URL = URL+"?base="+base;			
+		}else if(base != null && !base.isEmpty() && symbol != null && !symbol.isEmpty()){
+			URL = URL+"?base="+base+"&symbols="+symbol;		
+		}
+		else {
+			Reporter.addStepLog(Status.FAIL + " :: content type cannot be null or empty!");
+			logger.info("Content type cannot be null or empty!");
+		}
+		apiEndPointUri = String.format("%s%s", apiHostName, URL);
+		testName = testCaseName;
+		Reporter.addStepLog(Status.PASS + " :: Cucumber Hostname URL is :: " + apiEndPointUri);
+		logger.info("Cucumber Hostname URL is :: " + apiEndPointUri);
+		logger.info("Cucumber Test case name is :: " + testName);		
 	}
 
 	@When("^I set header content type as \"([^\"]*)\"$")
@@ -56,7 +79,7 @@ public class GetExchangeRatesTest extends TestBase {
 			logger.info("Content type cannot be null or empty!");
 		}
 	}
-
+	
 	@And("^I hit the API with requestbody \"([^\"]*)\" and request method is \"([^\"]*)\"$")
 	public void submitRequest(String requestBodyPath, String requestType) throws Throwable {
 		RestAssured.baseURI = apiEndPointUri;
